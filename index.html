@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="assets/libs/font-awesome-4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body ng-controller="mapController" >
+
+
+    <!-- Basic column layout -->
+    <div layout="column" layout-fill layout-padding style="height: 100vh;">
+      <!-- Nav Header -->
+      <div flex="10">
+        <div layout-xs="row">
+          <md-content>
+          <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+              <md-button class="md-icon-button" aria-label="Settings">
+                <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+              </md-button>
+
+              <div flex>
+                <md-autocomplete
+                  ng-disabled="ctrl.isDisabled"
+                  md-no-cache="ctrl.noCache"
+                  md-selected-item="ctrl.selectedItem"
+                  md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                  md-search-text="ctrl.searchText"
+                  md-selected-item-change="ctrl.selectedItemChange(item)"
+                  md-items="item in ctrl.querySearch(ctrl.searchText)"
+                  md-item-text="item.display"
+                  md-min-length="0"
+                  placeholder="What is your favorite US state?">
+
+                <md-item-template>
+                  <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                </md-item-template>
+
+                <md-not-found>
+                  No bus service matching "{{ctrl.searchText}}" were found.
+                  <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                </md-not-found>
+                </md-autocomplete>
+              </div>
+
+              <div>
+                <md-button class="md-icon-button" aria-label="Search">
+                  <i class="fa fa-search fa-lg" aria-hidden="true"></i>
+                </md-button>
+
+                <md-button class="md-icon-button" aria-label="Routes">
+                  <i class="fa fa-repeat fa-lg" aria-hidden="true"></i>
+                </md-button>
+              </div>
+
+            </div>
+          </md-toolbar>
+        </md-content>
+        </div>
+      </div>
+
+      <div flex="80" md-whiteframe="1">
+
+      </div>
+
+      <!-- Footer -->
+      <div flex="10" md-whiteframe="1">
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- Angular Material requires Angular.js Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+
+    <!-- Angular Material Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+
+    <script src="app/app.modules.js"></script>
+    <script src="app/app.routes.js"></script>
+    <script src="app/components/map/mapController.js"></script>
+
+  </body>
+</html>
