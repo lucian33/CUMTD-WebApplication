@@ -1,5 +1,5 @@
 // attach controller to main app
-myApp.controller('mapController', ['$scope', '$http', 'routeService', function($scope, $http, routeService){
+myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', 'routeService', function($scope, $http, $mdSidenav, routeService){
 
   var mylocation = {lat: 40.108966, lng: -88.211024};
   var stopLocation;
@@ -16,21 +16,6 @@ myApp.controller('mapController', ['$scope', '$http', 'routeService', function($
   $(document).ready(function () {
     initMap();
   });
-
-  // initial google map
-  function initMap() {
-  // Create a map object and specify the DOM element for display.
-    map = new google.maps.Map(document.getElementById('GoogleMap'), {
-        center: {lat: 40.108966, lng: -88.211024},
-        scrollwheel: false,
-        zoom: 15
-    });
-  }
-
-  function panTo(lat, lng){
-  	var center = new google.maps.LatLng(lat, lng);
-  	map.panTo(center);
-  }
 
   // routeService.getRoutes().then(function(data){
   //   console.log(data);
@@ -56,4 +41,29 @@ myApp.controller('mapController', ['$scope', '$http', 'routeService', function($
 
   }
 
+
+  $scope.toggleLeft = buildToggler('left');
+  $scope.toggleRight = buildToggler('right');
+
+    function buildToggler(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
+    }
+
 }]);
+
+// initial google map
+function initMap() {
+// Create a map object and specify the DOM element for display.
+  map = new google.maps.Map(document.getElementById('GoogleMap'), {
+      center: {lat: 40.108966, lng: -88.211024},
+      scrollwheel: false,
+      zoom: 15
+  });
+}
+
+function panTo(lat, lng){
+  var center = new google.maps.LatLng(lat, lng);
+  map.panTo(center);
+}

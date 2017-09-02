@@ -21,7 +21,7 @@
         <div layout-xs="row">
           <md-toolbar class="md-hue-2" >
             <div class="md-toolbar-tools">
-              <md-button class="md-icon-button" aria-label="Settings">
+              <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
                 <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
               </md-button>
 
@@ -59,11 +59,30 @@
         </div>
       </div>
 
-      <div flex="80" class="container">
-        <div class="mapHolder" md-whiteframe="2" id="GoogleMap">
+      <!-- Map Region -->
+      <div flex="80" class="container" layout="row">
 
+          <div>
+            <!-- Side Nav -->
+            <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+
+              <!-- Side Nav Header -->
+              <md-toolbar class="md-theme-indigo">
+
+              </md-toolbar>
+
+              <md-content layout-margin>
+
+              </md-content>
+            </md-sidenav>
+          </div>
+
+
+          <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
+          </div>
         </div>
-      </div >
+
+
 
       <!-- Footer -->
       <div class="container" flex>
