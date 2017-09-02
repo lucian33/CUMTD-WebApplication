@@ -8,15 +8,16 @@
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <link rel="stylesheet" href="assets/libs/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/Map.css">
   </head>
 
   <body ng-controller="mapController" >
 
 
     <!-- Basic column layout -->
-    <div layout="column" layout-fill layout-padding style="height: 100vh;">
+    <div layout="column" layout-fill style="height: 100vh;">
       <!-- Nav Header -->
-      <div flex="10">
+      <div class="container">
         <div layout-xs="row">
           <md-toolbar class="md-hue-2" >
             <div class="md-toolbar-tools">
@@ -26,35 +27,31 @@
 
               <div flex>
                 <md-autocomplete
-                  ng-disabled="changeThis.isDisabled"
-                  md-no-cache="ctrl.noCache"
-                  md-selected-item="ctrl.selectedItem"
-                  md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-                  md-search-text="ctrl.searchText"
-                  md-selected-item-change="ctrl.selectedItemChange(item)"
-                  md-items="item in ctrl.querySearch(ctrl.searchText)"
-                  md-item-text="item.display"
+                  md-no-cache="true"
+                  md-selected-item="selectedItem"
+                  md-search-text-change="searchTextChange(searchText)"
+                  md-search-text="searchText"
+                  md-selected-item-change="selectedItemChange(item)"
+                  md-items="item in querySearch(searchText)"
                   md-min-length="0"
-                  placeholder="What is your favorite US state?">
-
+                  placeholder="Which bus are you looking for?">
                 <md-item-template>
-                  <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                  <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
                 </md-item-template>
 
                 <md-not-found>
-                  No bus service matching "{{ctrl.searchText}}" were found.
-                  <a ng-click="ctrl.newState(ctrl.searchText)">Create a new one!</a>
+                  No bus service matching "{{searchText}}" were found.
                 </md-not-found>
                 </md-autocomplete>
               </div>
 
 
-                <md-button class="md-icon-button" aria-label="Search">
-                  <i class="fa fa-search " aria-hidden="true"></i>
-                </md-button>
-                <md-button class="md-icon-button" aria-label="Routes">
-                  <i class="fa fa-repeat " aria-hidden="true"></i>
-                </md-button>
+              <md-button class="md-icon-button" aria-label="Search">
+                <i class="fa fa-search " aria-hidden="true"></i>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="Routes">
+                <i class="fa fa-repeat " aria-hidden="true"></i>
+              </md-button>
 
 
             </div>
@@ -62,13 +59,17 @@
         </div>
       </div>
 
-      <div flex="80" md-whiteframe="1">
+      <div flex="80" class="container">
+        <div class="mapHolder" md-whiteframe="2" id="GoogleMap">
 
-      </div>
+        </div>
+      </div >
 
       <!-- Footer -->
-      <div flex="10" md-whiteframe="1">
+      <div class="container" flex>
+        <div  md-whiteframe="2">
 
+        </div>
       </div>
 
     </div>
@@ -83,14 +84,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
 
     <!-- Angular Material Library -->
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <!-- Send request and call the Initial function of Google Map -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLypO8cvdpghkWo7M3Hq-bT68hVpTzDTc&"></script>
 
 
     <script src="app/app.modules.js"></script>
     <script src="app/app.routes.js"></script>
+
     <script src="app/components/map/mapController.js"></script>
+
+    <script src="app/components/map/mapService.js"></script>
+
 
   </body>
 </html>

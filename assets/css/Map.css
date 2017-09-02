@@ -6,13 +6,17 @@ body {
   background-color: #333;
 }
 
-/* Remove the navbar's default margin-bottom and rounded borders */ 
+.container{
+  padding: 5px;
+}
+
+/* Remove the navbar's default margin-bottom and rounded borders */
 .navbar {
   margin-bottom: 0;
   border-radius: 0;
 }
 
-.list-group { 
+.list-group {
   position: relative;
   display: block;
   margin-bottom: -1px;
@@ -43,14 +47,13 @@ footer {
     height: auto;
     padding: 15px;
   }
-  .row.content {height:auto;} 
+  .row.content {height:auto;}
 }
 
 .mapHolder{
   /*center the map*/
-  position: relative;
+  /*position: relative;*/
   width: auto;
-  height: 100vh;
+  height: 100%;
   padding: 0px;
 }
-
