@@ -17,10 +17,10 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', 'routeServic
     initMap();
   });
 
-  // routeService.getRoutes().then(function(data){
-  //   console.log(data);
-  //   $scope.availableRoutes = data;
-  // });
+  routeService.getRoutes().then(function(data){
+    console.log(data);
+    $scope.availableRoutes = data;
+  });
 
   // $scope.availableRoutes = ["NAVY", "GREEN", "ORANGEHOPPER", "ILLINI", "RUBY", "YELLOW", "RED", "BROWN", "GREY EVENING", "GREY", "GREENHOPPER", "YELLOW EVENING", "GREEN EVENING", "YELLOWHOPPER", "GOLD", "PINK", "LAVENDER", "BLUE", "ORANGE", "SILVER", "RAVEN", "TEAL", "GOLDHOPPER"];
 
