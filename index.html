@@ -11,91 +11,38 @@
     <link rel="stylesheet" href="assets/css/Map.css">
   </head>
 
-  <body ng-controller="mapController" >
-
-
-    <!-- Basic column layout -->
-    <div layout="column" layout-fill style="height: 100vh;">
-      <!-- Nav Header -->
-      <div class="container">
-        <div layout-xs="row">
-          <md-toolbar class="md-hue-2" >
-            <div class="md-toolbar-tools">
-              <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
-                <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
-              </md-button>
-
-              <div flex>
-                <md-autocomplete
-                  md-no-cache="true"
-                  md-selected-item="selectedItem"
-                  md-search-text-change="searchTextChange(searchText)"
-                  md-search-text="searchText"
-                  md-selected-item-change="selectedItemChange(item)"
-                  md-items="item in querySearch(searchText)"
-                  md-min-length="0"
-                  placeholder="Which bus are you looking for?">
-                <md-item-template>
-                  <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
-                </md-item-template>
-
-                <md-not-found>
-                  No bus service matching "{{searchText}}" were found.
-                </md-not-found>
-                </md-autocomplete>
-              </div>
-
-
-              <md-button class="md-icon-button" aria-label="Search">
-                <i class="fa fa-search " aria-hidden="true"></i>
-              </md-button>
-              <md-button class="md-icon-button" aria-label="Routes">
-                <i class="fa fa-repeat " aria-hidden="true"></i>
-              </md-button>
-
-
+  <body >
+      <!-- Main View of this app -->
+      <ng-view>
+        <!-- Footer -->
+        <!-- <div md-whiteframe="2" class="footer" layout="row" layout-align="center center">
+          <div flex="33">
+            <md-button class="md-icon-button md-accent" aria-label="Use Android">
+              <i class="fa fa-star fa-2x" aria-hidden="true"></i>
+            </md-button>
+            <div>
+              Stop
             </div>
-          </md-toolbar>
-        </div>
-      </div>
-
-      <!-- Map Region -->
-      <div flex="80" class="container" layout="row">
-
-          <div>
-            <!-- Side Nav -->
-            <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
-
-              <!-- Side Nav Header -->
-              <md-toolbar class="md-theme-indigo">
-
-              </md-toolbar>
-
-              <md-content layout-margin>
-
-              </md-content>
-            </md-sidenav>
+          </div>
+          <div flex="33">
+            <md-button class="md-icon-button md-primary" aria-label="Use Android">
+              <i class="fa fa-bus fa-2x" aria-hidden="true"></i>
+            </md-button>
+            <div>
+              Bus
+            </div>
+          </div>
+          <div flex="33">
+            <md-button class="md-icon-button" aria-label="Use Android">
+              <i class="fa fa-cloud fa-2x" aria-hidden="true"></i>
+            </md-button>
+            <div>
+              Weather
+            </div>
           </div>
 
-
-          <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
-          </div>
-        </div>
-
-
-
-      <!-- Footer -->
-      <div class="container" flex>
-        <div  md-whiteframe="2">
-
-        </div>
-      </div>
-
-    </div>
-
-
-
-
+        </div> -->
+      </ng-view>
 
 
     <!-- Angular Material requires Angular.js Libraries -->

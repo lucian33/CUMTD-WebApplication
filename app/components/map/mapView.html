@@ -1,3 +1,66 @@
-<div class="">
-  hahahah
+<!-- Basic column layout -->
+<div layout="column"  style="height: 100vh;">
+  <!-- Nav Header -->
+  <div class="container">
+    <div layout-xs="row">
+      <md-toolbar class="md-hue-2" >
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
+            <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+          </md-button>
+
+          <div flex>
+            <md-autocomplete
+              md-no-cache="true"
+              md-selected-item="selectedItem"
+              md-search-text-change="searchTextChange(searchText)"
+              md-search-text="searchText"
+              md-selected-item-change="selectedItemChange(item)"
+              md-items="item in querySearch(searchText)"
+              md-min-length="0"
+              placeholder="Which bus are you looking for?">
+            <md-item-template>
+              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+            </md-item-template>
+
+            <md-not-found>
+              No bus service matching "{{searchText}}" were found.
+            </md-not-found>
+            </md-autocomplete>
+          </div>
+
+
+          <md-button class="md-icon-button" aria-label="Search">
+            <i class="fa fa-search " aria-hidden="true"></i>
+          </md-button>
+          <md-button class="md-icon-button" aria-label="Routes">
+            <i class="fa fa-repeat " aria-hidden="true"></i>
+          </md-button>
+
+
+        </div>
+      </md-toolbar>
+    </div>
+  </div>
+
+  <!-- Map Region -->
+  <div flex class="container" layout="row">
+
+      <!-- Side Nav -->
+      <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+
+        <!-- Side Nav Header -->
+        <md-toolbar class="md-theme-indigo">
+
+        </md-toolbar>
+
+        <md-content layout-margin>
+
+        </md-content>
+      </md-sidenav>
+
+      <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
+      </div>
+    </div>
+
 </div>

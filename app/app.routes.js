@@ -1,11 +1,14 @@
 myApp.config(function($routeProvider) {
   $routeProvider
-  .when("/", {
-
+  .when("/a", {
+    templateUrl: "app/components/map/mapView.html",
+    controller:"mapController",
     resolve: {
-      // routes: function(routeService){
-      //   return routeService.getRoutes();
-      // }
+      routes: function(routeService){
+        // only when the proomise is sucess
+        // the page will load
+        return routeService.getRoutes();
+      }
     }
   });
 

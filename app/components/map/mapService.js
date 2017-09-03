@@ -26,7 +26,6 @@ myApp.service('routeService', ['$http', '$q', function($http, $q){
             }
           }
           defered.resolve(routes);
-
         });
         return defered.promise;
       }
