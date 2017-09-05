@@ -13,28 +13,31 @@
             <md-autocomplete
               md-no-cache="true"
               md-selected-item="selectedItem"
-              md-search-text-change="searchTextChange(searchText)"
               md-search-text="searchText"
-              md-selected-item-change="selectedItemChange(item)"
+              md-selected-item-change="selectedStopChange(item)"
               md-items="item in querySearch(searchText)"
-              md-min-length="0"
-              placeholder="Which bus are you looking for?">
+              md-item-text="item.stop_name"
+              md-min-length="1"
+              placeholder="Which bus stop are you looking for?">
             <md-item-template>
-              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+
+              <!-- <span md-highlight-text="searchText" md-highlight-flags="^i" ng-repeat="stop in item.stop_points">{{stop.stop_name}}</span> -->
+              <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.stop_name}}</span>
+
             </md-item-template>
 
             <md-not-found>
-              No bus service matching "{{searchText}}" were found.
+              No stop matches "{{searchText}}" were found.
             </md-not-found>
             </md-autocomplete>
           </div>
 
 
-          <md-button class="md-icon-button" aria-label="Search">
+          <md-button class="md-icon-button" aria-label="Search" ng-click="showCard()">
             <i class="fa fa-search " aria-hidden="true"></i>
           </md-button>
           <md-button class="md-icon-button" aria-label="Routes">
-            <i class="fa fa-repeat " aria-hidden="true"></i>
+            <a href="./"><i class="fa fa-repeat " aria-hidden="true"></i></a>
           </md-button>
 
 

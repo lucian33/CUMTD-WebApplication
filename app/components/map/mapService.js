@@ -8,8 +8,6 @@ myApp.service('routeService', ['$http', '$q', function($http, $q){
       getRoutes: function(){
         // get every availabe routes
         var defered = $q.defer();
-        // and number of vehicles
-        this.availabeRoutes = [];
 
         var routes = [];
 
@@ -26,12 +24,31 @@ myApp.service('routeService', ['$http', '$q', function($http, $q){
             }
           }
           defered.resolve(routes);
+
         });
         return defered.promise;
       }
 
-
     }
 
+}]);
 
+
+// get all available stops
+myApp.service('stopsService', ['$http', '$q', function($http, $q){
+
+  var url = 'https://developer.cumtd.com/api/v2.2/json/getStops';
+  return {
+    getStops: function(){
+      var defered = $q.defer();
+
+      $http.get(url, {params: {'key': key}}).then((res) => {
+        var stops;
+        stops = res.data.stops;
+        defered.resolve(stops);
+      });
+
+      return defered.promise;
+    }
+  }
 }]);
