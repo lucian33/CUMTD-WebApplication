@@ -1,16 +1,34 @@
 
-<md-card md-theme-watch style="background-color: transparent;">
+<md-card md-theme-watch class="card">
   <md-card-title>
+
     <md-card-title-text>
       <span class="md-headline">Card with stop info</span>
       <span class="md-subhead">subhead</span>
     </md-card-title-text>
-    <md-card-title-media>
-      <div class="md-media-lg card-media"></div>
-    </md-card-title-media>
+
   </md-card-title>
-  <md-card-actions layout="row" layout-align="end center">
-    <md-button>Action 1</md-button>
-    <md-button>Action 2</md-button>
-  </md-card-actions>
+
+  <md-card-content layout-gt-xs="row" >
+    <md-card-title-media style="background-color: ghostWhite;" style="text-align: center; overflow-y: hidden;">
+      <div class="md-media-xl card-media" style="text-align: center; overflow-y: scroll;">
+        <!-- <md-button class="md-raised" ng-repeat="route in availableRoutes">
+          {{route}}
+        </md-button> -->
+        <md-list flex>
+          <md-list-item ng-repeat="route in availableRoutes" ng-click="null" class="md-1-inline" >
+            {{route}}
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-card-title-media>
+
+
+    <md-card-actions layout-gt-sm="column" layout-align="center center">
+      <md-button>Action 1</md-button>
+      <md-button>Action 2</md-button>
+    </md-card-actions>
+
+  </md-card-content>
+
 </md-card>

@@ -2,12 +2,8 @@
 myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog', 'routeService', 'stopsService', function($scope, $http, $mdSidenav,  $mdDialog, routeService, stopsService){
 
   var mylocation = {lat: 40.108966, lng: -88.211024};
-  $scope.stops = [];
-  var busLocation;
-
   var result;
-  var map;
-  var key = "ef25cd9380fc43e7a4a76ec1af0557cf";
+
   // array used to store the route line coordinates
   var shapeCoordinates = [];
   // store the polylines
@@ -22,12 +18,10 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   //   $scope.availableRoutes = data;
   // });
 
-  stopsService.getStops().then(function(data){
-    $scope.stops = data; // store all the stops information
-  });
+  $scope.stops = stopsService.getStops();
+  $scope.markers = [];
 
-  // $scope.availableRoutes = ["NAVY", "GREEN", "ORANGEHOPPER", "ILLINI", "RUBY", "YELLOW", "RED", "BROWN", "GREY EVENING", "GREY", "GREENHOPPER", "YELLOW EVENING", "GREEN EVENING", "YELLOWHOPPER", "GOLD", "PINK", "LAVENDER", "BLUE", "ORANGE", "SILVER", "RAVEN", "TEAL", "GOLDHOPPER"];
-
+  
   // --------------------------------------------functions for the autocomplete--------------------------------
 
   // once user selected a stop
@@ -91,7 +85,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 function createMarker(stopPoints, markers, func) {
   var position;
   var img = {
-    url: 'assets/img/placeholder.png',
+    url: 'assets/img/icon.svg',
     scaledSize: new google.maps.Size(50, 50), // scaled size
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(25, 50) // anchor

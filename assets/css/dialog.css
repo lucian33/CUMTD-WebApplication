@@ -1,0 +1,12 @@
+.card {
+  box-shadow: none;
+}
+
+md-card-actions md-button{
+  margin: 0 !important;
+}
+
+/* remove annoying margin when the layout of card actions buttons changed from row to col*/
+md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button), md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button) {
+    margin: 0;
+}

@@ -10,7 +10,7 @@ myApp.config(function($routeProvider) {
       //   return routeService.getRoutes();
       // }
       stops: function(stopsService){
-        return stopsService.getStops();
+        return stopsService.loadStops();
       }
     }
   });

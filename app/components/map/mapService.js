@@ -3,6 +3,10 @@
 myApp.service('routeService', ['$http', '$q', function($http, $q){
 
     var url = 'https://developer.cumtd.com/api/v2.2/json/GetVehicles?key=';
+
+
+
+
     return{
 
       getRoutes: function(){
@@ -34,21 +38,32 @@ myApp.service('routeService', ['$http', '$q', function($http, $q){
 }]);
 
 
-// get all available stops
+// get all available stops service
+// realized with promise / closure
 myApp.service('stopsService', ['$http', '$q', function($http, $q){
 
   var url = 'https://developer.cumtd.com/api/v2.2/json/getStops';
+  var stops = [];
+  //  private constructor
+  function _loadStops(){
+
+    var defered = $q.defer();
+
+    $http.get(url, {params: {'key': key}}).then((res) => {
+
+      stops = res.data.stops;
+      defered.resolve(); // resolve promise
+    });
+
+    return defered.promise;
+
+  }
+
+  // functions in closure
   return {
     getStops: function(){
-      var defered = $q.defer();
-
-      $http.get(url, {params: {'key': key}}).then((res) => {
-        var stops;
-        stops = res.data.stops;
-        defered.resolve(stops);
-      });
-
-      return defered.promise;
-    }
+      return stops;
+    },
+    loadStops: _loadStops
   }
 }]);
