@@ -4,9 +4,6 @@ myApp.service('routeService', ['$http', '$q', function($http, $q){
 
     var url = 'https://developer.cumtd.com/api/v2.2/json/GetVehicles?key=';
 
-
-
-
     return{
 
       getRoutes: function(){

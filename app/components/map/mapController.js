@@ -21,7 +21,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   $scope.stops = stopsService.getStops();
   $scope.markers = [];
 
-  
+
   // --------------------------------------------functions for the autocomplete--------------------------------
 
   // once user selected a stop
@@ -73,9 +73,9 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       clickOutsideToClose:true,
       // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     });
+
+    console.log(ev);
   };
-
-
 
 }]);
 
@@ -101,9 +101,11 @@ function createMarker(stopPoints, markers, func) {
         title: entry.stop_name,
         icon: img
     });
+
     marker.addListener('click', func);
 
   });
+
   panTo(position.lat, position.lng);
   //
   // // add marker to the marker array
