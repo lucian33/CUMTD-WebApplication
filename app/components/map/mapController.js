@@ -8,7 +8,8 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   var shapeCoordinates = [];
   // store the polylines
   var shapeArray = [];
-
+  // store the stops markers
+  $scope.stopMarkers = [];
   $(document).ready(function () {
     initMap();
   });
@@ -28,7 +29,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   $scope.selectedStopChange = function (item){
     //console.log(item.stop_points);
     if(item !== undefined){
-      createMarker(item.stop_points, [], $scope.showCard);
+      createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
     }
   };
 
@@ -63,18 +64,21 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
 
   // --------------------------------------------functions for the marker click--------------------------------
-  $scope.showCard = function(ev) {
+  // index of the clicked stop
+  $scope.showCard = function(index) {
 
     $mdDialog.show({
       controller: 'dialogController',
       templateUrl: 'app/components/dialog/dialogView.html',
       parent: angular.element(document.body),
-      targetEvent: ev,
       clickOutsideToClose:true,
+      // pass stop infomation
+      locals:{
+        stopInfo: $scope.stopMarkers[index].info
+      }
       // fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     });
-
-    console.log(ev);
+    //console.log($scope.stopMarkers[index].info);
   };
 
 }]);
@@ -91,7 +95,7 @@ function createMarker(stopPoints, markers, func) {
     anchor: new google.maps.Point(25, 50) // anchor
   };
 
-  stopPoints.forEach((entry)=>{
+  stopPoints.forEach((entry, i)=>{
 
     position = {lat: entry.stop_lat, lng: entry.stop_lon};
     var marker = new google.maps.Marker({
@@ -99,10 +103,21 @@ function createMarker(stopPoints, markers, func) {
         map: map,
         position: position,
         title: entry.stop_name,
-        icon: img
+        icon: img,
+        info:entry
     });
 
-    marker.addListener('click', func);
+    // add evt listener to each marker
+    // use closure to ensure the lexical scope wont be the same
+    marker.addListener('click', (function(index){
+      return function (){
+        // show the dialog
+        func(i);
+      }
+    })(i));// self invoke, preserve the index
+
+    // store markers
+    markers.push(marker);
 
   });
 

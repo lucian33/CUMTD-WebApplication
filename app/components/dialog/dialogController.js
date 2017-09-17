@@ -1,19 +1,17 @@
-myApp.controller('dialogController', ['$scope', '$mdDialog', function($scope, $mdDialog){
+myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo', function($scope, $mdDialog, $http, stopInfo){
 
   // availableRoutes in this stop
-  $scope.availableRoutes = ["NAVI", "BLUE", "ILLINI", "YELLOW", "NAVI2", "BLUE3", "ILLINI4", "YELLOW5"];
-
+  // stores availabeRoutes info
+  $scope.availableRoutes = [];
+  // get the information of stop clicked
+  $scope.stopInfo = stopInfo;
   $scope.getDeparturesByStop = function(stopID){
     var url = 'https://developer.cumtd.com/api/v2.2/json/getdeparturesbystop';
     var departures = [];
-
-    $http.get(url, {params: {'key': key, 'stop_id': stopID }}).then((res) => {
-
-      stops = res.data.stops;
-      defered.resolve(); // resolve promise
-
+    console.log($scope.stopInfo.stop_id);
+    $http.get(url, {params: {'key': key, 'stop_id': stopID, 'pt': 60 }}).then((res) => {
+      $scope.availableRoutes = res.data.departures;
     });
-
-  }
-
+  };
+  $scope.getDeparturesByStop($scope.stopInfo.stop_id);
 }]);
