@@ -29,7 +29,8 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   $scope.selectedStopChange = function (item){
     //console.log(item.stop_points);
     if(item !== undefined){
-      $scope.stopMarkers = []; // clear marker before add
+      clearMarkers($scope.stopMarkers); // clear markers from map
+      $scope.stopMarkers = []; // clear markers from array
       createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
     }
   };
@@ -85,11 +86,9 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 }]);
 
 function clearMarkers(markers){
-
-  // markers.forEach((marker)=>{
-  //   marker.setMap(null);
-  // });
-  markers=[];
+  markers.forEach((marker)=>{
+    marker.setMap(null);
+  });
 }
 
 // Helper functions
