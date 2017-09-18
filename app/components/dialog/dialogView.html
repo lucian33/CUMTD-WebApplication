@@ -4,20 +4,30 @@
 
     <md-card-title-text>
       <span class="md-headline">{{stopInfo.stop_name}}</span>
-      <span class="md-subhead">subhead</span>
+      <!-- <span class="md-subhead">subhead</span> -->
     </md-card-title-text>
 
   </md-card-title>
 
   <md-card-content layout-gt-xs="row" >
-    <md-card-title-media style="background-color: ghostWhite;" style="text-align: center; overflow-y: hidden;">
+    <md-card-title-media>
       <div class="md-media-xl card-media" style="text-align: center; overflow-y: scroll;">
-
         <md-list flex>
-          <md-list-item ng-repeat="route in availableRoutes" ng-click="null" class="md-1-inline">
+          <md-list-item class="md-whiteframe-1dp" ng-repeat="route in availableRoutes | orderBy: -expected_mins" ng-click="null" class="md-1-inline">
             <div class="dialogRoute" layout="column">
-              <h3>{{route.headsign}}<span>    {{route.expected_mins}}mins</span></h3>
-              <h4>{{route.trip.trip_headsign}}</h4>
+              <div layout="row">
+                <div>
+                  <b>{{route.headsign}}</b>
+                </div>
+                <div class="pull-right">
+                  {{route.expected_mins}}mins
+                </div>
+              </div>
+              <div>
+                {{route.trip.trip_headsign}}
+              </div>
+              <!-- <h3>{{route.headsign}}<span>{{route.expected_mins}}mins</span></h3>
+              <h4>{{route.trip.trip_headsign}}</h4> -->
             </div>
           </md-list-item>
         </md-list>

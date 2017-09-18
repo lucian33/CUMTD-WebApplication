@@ -1,17 +1,37 @@
 .card {
   box-shadow: none;
+  /*width: 50vw;*/
 }
 
+.card md-card-title-media {
+  /*max-width: 400px;*/
+  /*width: 80%;*/
+  /*background-color: ghostWhite;*/
+  text-align: center;
+}
+
+md-list-item{
+  background-color: ghostWhite;
+}
+/*
 md-card-actions md-button{
   margin: 0 !important;
-}
+}*/
 
 /* remove annoying margin when the layout of card actions buttons changed from row to col*/
-md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button), md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button) {
+/*md-card .md-actions:not(.layout-column) .md-button:not(.md-icon-button), md-card md-card-actions:not(.layout-column) .md-button:not(.md-icon-button) {
     margin: 0;
+}*/
+
+.dialogRoute {
+  width: 100%;
+  padding: 5px;
+  /*border: 1px solid black;
+  border-radius: 10px;*/
 }
 
-.dialogRoute h3 h4 {
-  line-height: 1em;
-  margin: 1em;
+.dialogRoute>div{
+  display:flex;
+  /* separate route and time */
+  justify-content: space-between;
 }

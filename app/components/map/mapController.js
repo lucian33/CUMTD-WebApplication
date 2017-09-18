@@ -29,6 +29,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   $scope.selectedStopChange = function (item){
     //console.log(item.stop_points);
     if(item !== undefined){
+      $scope.stopMarkers = []; // clear marker before add
       createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
     }
   };
@@ -83,10 +84,18 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
 }]);
 
+function clearMarkers(markers){
+
+  // markers.forEach((marker)=>{
+  //   marker.setMap(null);
+  // });
+  markers=[];
+}
 
 // Helper functions
 // create marker's based on the position and marker array
 function createMarker(stopPoints, markers, func) {
+
   var position;
   var img = {
     url: 'assets/img/icon.svg',
@@ -120,12 +129,13 @@ function createMarker(stopPoints, markers, func) {
     markers.push(marker);
 
   });
-
+  console.log(markers);
   panTo(position.lat, position.lng);
   //
   // // add marker to the marker array
   // markers.push(marker);
 }
+
 // initial google map
 function initMap() {
 // Create a map object and specify the DOM element for display.
