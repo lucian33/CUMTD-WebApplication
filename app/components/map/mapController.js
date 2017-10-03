@@ -27,6 +27,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
   // once user selected a stop
   $scope.selectedStopChange = function (item){
+    console.log($scope.selectedItem);
     //console.log(item.stop_points);
     if(item !== undefined){
       clearMarkers($scope.stopMarkers); // clear markers from map
@@ -193,7 +194,7 @@ function createBusMarker(busInfo, markers) {
     url: 'assets/img/bus.png',
     scaledSize: new google.maps.Size(25, 25), // scaled size
     origin: new google.maps.Point(0,0), // origin
-    anchor: new google.maps.Point(12.5, 25) // anchor
+    anchor: new google.maps.Point(12,0) // anchor
   };
 
   var position = {lat: busInfo.location.lat, lng: busInfo.location.lon};
