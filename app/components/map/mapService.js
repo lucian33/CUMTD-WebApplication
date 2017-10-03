@@ -64,3 +64,10 @@ myApp.service('stopsService', ['$http', '$q', function($http, $q){
     loadStops: _loadStops
   }
 }]);
+
+
+myApp.service('vehicleService', ['$http', '$q', function(){
+  this.id = '';
+  this.location = '';
+  this.route = {};
+}]);

@@ -1,4 +1,4 @@
-myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo', function($scope, $mdDialog, $http, stopInfo){
+myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo', 'vehicleService', function($scope, $mdDialog, $http, stopInfo, vehicleService){
 
   // availableRoutes in this stop
   // stores availabeRoutes info
@@ -14,4 +14,20 @@ myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo'
     });
   };
   $scope.getDeparturesByStop($scope.stopInfo.stop_id);
+
+  // get the vehicles location and route information
+  // update the shared service
+  // then update the main map view
+  $scope.getVehicleLocation = function (obj){
+    //console.log(obj);
+    let route = obj.route;
+    //let vehicleID = obj.vehicle_id;
+    // console.log(route);
+    // console.log(vehicleID);
+    vehicleService.id = obj.vehicle_id;
+    vehicleService.route = obj;
+    //console.log(vehicleService.id + " dialog val");
+    $mdDialog.hide();
+  }
+
 }]);

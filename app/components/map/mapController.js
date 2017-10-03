@@ -1,5 +1,5 @@
 // attach controller to main app
-myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog', 'routeService', 'stopsService', function($scope, $http, $mdSidenav,  $mdDialog, routeService, stopsService){
+myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog', 'routeService', 'stopsService', 'vehicleService', function($scope, $http, $mdSidenav,  $mdDialog, routeService, stopsService, vehicleService){
 
   var mylocation = {lat: 40.108966, lng: -88.211024};
   var result;
@@ -83,7 +83,59 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     //console.log($scope.stopMarkers[index].info);
   };
 
+
+
+  // --------------------------------------------functions for the departure click--------------------------------
+  $scope.busMarker = [];
+  $scope.shapeMarker = [];
+  // watch if the id updated
+  $scope.$watch(
+    function(){
+      return vehicleService.route;
+    },
+    function (newVal, oldVal){
+      // once the id updated, update view
+      if (newVal !== oldVal){
+        console.log(newVal);
+        var shapeID = newVal.trip.shape_id;
+
+        // clear all markers after this
+        clearMarkers($scope.busMarker);
+        clearMarkers($scope.shapeMarker);
+        createBusMarker(newVal, $scope.busMarker);
+        // get shape by shapeID
+        createPolyline(shapeID, "#" + newVal.route.route_color, $scope.shapeMarker);
+      }
+
+    });
+
+  function createPolyline(shapeID, color, markers){
+
+    var url = 'https://developer.cumtd.com/api/v2.2/json/GetShape';
+    $http.get(url, {
+      params: {
+        'key' : key,
+        'shape_id' : shapeID
+      }
+    }).then((res) => {
+      // initialize the coord to empty
+      shapeCoordinates = [];
+      data = res.data;
+      // result.shapes[0].shape_pt_lat
+      // add all the stops' lat and lon to coordinates
+      for (i = 0; i < data.shapes.length; i++) {
+        var coord = data.shapes[i];
+        var location = {lat : coord.shape_pt_lat, lng : coord.shape_pt_lon};
+        // add the coordinates to the array
+        shapeCoordinates.push(location);
+      }
+      // draw the route Shpae on map
+      drawPolyline(shapeCoordinates, color, markers);
+    });
+  }
 }]);
+
+
 
 function clearMarkers(markers){
   markers.forEach((marker)=>{
@@ -135,14 +187,54 @@ function createMarker(stopPoints, markers, func) {
   // markers.push(marker);
 }
 
+function createBusMarker(busInfo, markers) {
+
+  var img = {
+    url: 'assets/img/bus.png',
+    scaledSize: new google.maps.Size(25, 25), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(12.5, 25) // anchor
+  };
+
+  var position = {lat: busInfo.location.lat, lng: busInfo.location.lon};
+  var marker = new google.maps.Marker({
+      // assign the map and location of the marker
+      map: map,
+      position: position,
+      icon: img,
+      title: busInfo.trip.trip_headsign
+  });
+
+  // store markers
+  markers.push(marker);
+
+  console.log(markers);
+  panTo(position.lat, position.lng);
+
+}
+
 // initial google map
 function initMap() {
-// Create a map object and specify the DOM element for display.
+  // Create a map object and specify the DOM element for display.
   map = new google.maps.Map(document.getElementById('GoogleMap'), {
       center: {lat: 40.108966, lng: -88.211024},
       scrollwheel: false,
       zoom: 18
   });
+}
+
+// create route polyLine
+function drawPolyline(coordArray, color, markers){
+  // clear all the drawn route initially
+  var routeShape = new google.maps.Polyline({
+    path: coordArray,
+    geodesic: true,
+    strokeColor: color,
+    strokeOpacity: 1.0,
+    strokeWeight: 4
+  });
+	markers.push(routeShape);
+	routeShape.setMap(map);
 }
 
 // panto specified location
