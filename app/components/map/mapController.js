@@ -89,6 +89,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   // --------------------------------------------functions for the departure click--------------------------------
   $scope.busMarker = [];
   $scope.shapeMarker = [];
+
   // watch if the id updated
   $scope.$watch(
     function(){
@@ -98,6 +99,12 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       // once the id updated, update view
       if (newVal !== oldVal){
         console.log(newVal);
+
+        // sets the current states
+        $scope.currentStates.isSelected = true;
+        $scope.currentStates.stop_id = newVal.stop_id;
+        $scope.currentStates.route = newVal.route.route_id;
+
         var shapeID = newVal.trip.shape_id;
 
         // clear all markers after this
@@ -110,7 +117,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
     });
 
-  function createPolyline(shapeID, color, markers){
+    function createPolyline(shapeID, color, markers){
 
     var url = 'https://developer.cumtd.com/api/v2.2/json/GetShape';
     $http.get(url, {
@@ -134,9 +141,45 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       drawPolyline(shapeCoordinates, color, markers);
     });
   }
+
+
+  // --------------------------------------------functions for the collecting feedback--------------------------------
+  // store current states for updating database
+  $scope.currentStates = {
+    isSelected: false,
+    route: '',
+    stop_id: ''
+  };
+
+
 }]);
 
 
+// closure for the hovering button
+(function() {
+  myApp.controller('fabCtrl', ['$scope', function($scope) {
+
+    this.isOpen = false;
+
+    this.selectedMode = 'md-fling';
+
+    this.selectedDirection = 'right';
+
+    // console.log($scope.currentStates);
+
+    // handle the click function
+    // base on up and down vote
+    this.clickHandler = function (bool){
+      if (bool){
+        alert(`I am satisfied with stop_id: ${$scope.currentStates.stop_id}, route: ${$scope.currentStates.route}`);
+      }
+      else{
+        alert(`I am unsatisfied with stop_id: ${$scope.currentStates.stop_id}, route: ${$scope.currentStates.route}`);
+      }
+    }
+  }]);
+
+})();
 
 function clearMarkers(markers){
   markers.forEach((marker)=>{

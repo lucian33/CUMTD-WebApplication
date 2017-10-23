@@ -65,3 +65,18 @@ footer {
   /*height: 100%;*/
   padding: 0px;
 }
+
+
+/* style for fab button*/
+
+.fab{
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+
+.md-button .md-fab{
+  display: inline-block;
+  /*height: auto;*/
+  width: auto;
+}

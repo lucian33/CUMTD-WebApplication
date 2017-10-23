@@ -63,8 +63,36 @@
       </md-sidenav>
 
       <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
+
       </div>
-    </div>
+      <!-- FAB BUTTON -->
+      <div class="fab" layout="row" layout-align="center center" ng-controller="fabCtrl as fb">
+
+        <md-fab-speed-dial ng-show="currentStates.isSelected" md-open="false" md-direction="{{fb.selectedDirection}}"
+                           ng-class="fb.selectedMode">
+          <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-warn">
+              <md-icon md-font-icon="fa-bars fa-lg" class="fa"></md-icon>
+            </md-button>
+          </md-fab-trigger>
+
+          <md-fab-actions>
+            <md-button aria-label="satisfied" class="md-fab md-raised md-mini">
+              <md-icon md-font-icon="fa-smile-o fa-lg" class="fa" aria-label="satisfied" ng-click="fb.clickHandler(true)"></md-icon>
+            </md-button>
+            <!-- <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+              <md-icon md-svg-src="img/icons/facebook.svg" aria-label="Facebook"></md-icon>
+            </md-button> -->
+            <md-button aria-label="unsatisfied" class="md-fab md-raised md-mini">
+                <md-icon md-font-icon="fa-frown-o fa-lg" class="fa" aria-label="unsatisfied" ng-click="fb.clickHandler(false)"></md-icon>
+            </md-button>
+          </md-fab-actions>
+        </md-fab-speed-dial>
+
+      </div>
+
+
+  </div>
 
 
   <!-- Footer -->
