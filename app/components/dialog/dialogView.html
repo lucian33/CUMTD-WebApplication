@@ -11,9 +11,9 @@
 
   <md-card-content layout-gt-xs="row" >
     <md-card-title-media>
-      <div class="md-media-xl card-media" style="text-align: center; overflow-y: scroll;">
+      <div class="md-media-xl card-media routeContainer">
         <md-list flex>
-          <md-list-item class="md-whiteframe-1dp" ng-repeat="route in availableRoutes | orderBy: -expected_mins" ng-click="getVehicleLocation(route)" class="md-1-inline">
+          <md-list-item flex class="md-whiteframe-1dp" ng-repeat="route in availableRoutes | orderBy: -expected_mins" ng-click="getVehicleLocation(route)" class="md-1-inline">
             <div class="dialogRoute" layout="column">
               <div layout="row">
                 <div style="background-color: #{{route.route.route_color}}; padding: 0 2px; border-radius: 2px;">

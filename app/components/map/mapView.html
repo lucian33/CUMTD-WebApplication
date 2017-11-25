@@ -36,11 +36,9 @@
           <md-button class="md-icon-button" aria-label="Search" ng-click="selectedStopChange(selectedItem)">
             <i class="fa fa-search " aria-hidden="true"></i>
           </md-button>
-          <md-button class="md-icon-button" aria-label="Routes">
+          <!-- <md-button class="md-icon-button" aria-label="Routes">
             <a href="./"><i class="fa fa-repeat " aria-hidden="true"></i></a>
-          </md-button>
-
-
+          </md-button> -->
         </div>
       </md-toolbar>
     </div>
@@ -50,21 +48,59 @@
   <div flex class="container" layout="row">
 
       <!-- Side Nav -->
-      <md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4">
+      <md-sidenav class="md-sidenav-left toolKit" md-component-id="left" md-whiteframe="4">
 
         <!-- Side Nav Header -->
         <md-toolbar class="md-theme-indigo">
-
+          <div class="userIcon"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></div>
+          <div class="userName"> Hi Passenger!</div>
         </md-toolbar>
 
-        <md-content layout-margin>
-
+        <md-content layout-margin >
+          <div>
+            <md-button>
+              <div>
+                <div class="buttonIcon">
+                  <i class="fa fa-compass fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="buttonText">
+                  Locate Me
+                </div>
+              </div>
+            </md-button>
+          </div>
+          <div>
+            <md-button>
+              <div>
+                <div class="buttonIcon">
+                  <i class="fa fa-location-arrow fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="buttonText">
+                  Nearest Stop
+                </div>
+              </div>
+            </md-button>
+          </div>
+          <div>
+            <md-button ng-click="selectedStopChange(selectedItem)">
+              <div>
+                <div class="buttonIcon">
+                  <i class="fa fa-arrow-left fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="buttonText">
+                  Back to Stop
+                </div>
+              </div>
+            </md-button>
+          </div>
         </md-content>
+
       </md-sidenav>
 
       <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
 
       </div>
+
       <!-- FAB BUTTON -->
       <div class="fab" layout="row" layout-align="center center" ng-controller="fabCtrl as fb">
 
@@ -72,7 +108,7 @@
                            ng-class="fb.selectedMode">
           <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab md-warn">
-              <md-icon md-font-icon="fa-bars fa-lg" class="fa"></md-icon>
+              <md-icon md-font-icon="fa-list fa-lg" class="fa"></md-icon>
             </md-button>
           </md-fab-trigger>
 

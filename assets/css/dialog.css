@@ -1,3 +1,12 @@
+/* remove focus outline */
+*:focus {outline:none}
+
+md-dialog{
+  max-width: 350px;
+  /*width: 50vw;*/
+}
+
+
 .card {
   box-shadow: none;
   /*width: 50vw;*/
@@ -5,14 +14,21 @@
 
 .card md-card-title-media {
   /*max-width: 400px;*/
-  width: 80%;
+  /*width: 80%;*/
   /*background-color: ghostWhite;*/
   text-align: center;
   margin: 0;
 }
 
-md-card md-card-content .md-media-xl {
+.routeContainer {
   width: 100%;
+  text-align: center;
+  overflow-y: auto;
+}
+
+md-card md-card-content .md-media-xl {
+    height: 300px;
+    width: 300px;
 }
 
 md-list-item{

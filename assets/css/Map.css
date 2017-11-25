@@ -2,7 +2,8 @@
 html,
 body {
   height: 100%;
-	width : 100%
+	width : 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container{
@@ -71,12 +72,64 @@ footer {
 
 .fab{
   position: absolute;
-  bottom: 5%;
-  left: 5%;
+  bottom: 15%;
+  left: 1%;
 }
 
 .md-button .md-fab{
   display: inline-block;
-  /*height: auto;*/
+
   width: auto;
+}
+
+.toolKit{
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.toolKit .md-button>div{
+  width: 100%;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: left;
+}
+
+.toolKit .buttonIcon{
+  flex: 1;
+}
+
+.toolKit .buttonText{
+  flex: 4;
+}
+
+.userIcon{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+.toolKit md-toolbar{
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  line-height: 110%;
+}
+
+.toolKit md-toolbar>div{
+  margin: 5px;
+}
+
+.toolKit .md-button{
+  /*flex: 3;*/
+  width: 100%;
+  margin: 0px;
 }
