@@ -58,3 +58,29 @@ md-card-actions md-button{
   /* separate route and time */
   justify-content: space-between;
 }
+
+.noRoutes{
+  display: flex;
+  height: 300px;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.noRoutes>div{
+  margin: 10px;
+}
+
+.noRoutes>div:nth-child(1){
+  animation: zoom 3s infinite;
+}
+
+
+@-webkit-keyframes zoom {
+    from {transform: scale3d(0.85, 0.85, 0.85);}
+    to {transform: scale3d(1.2, 1.2, 1.2);}
+}
+
+@keyframes zoom {
+    from {transform: scale3d(0.85, 0.85, 0.85);}
+    to {transform: scale3d(1.1, 1.1, 1.1);}
+}

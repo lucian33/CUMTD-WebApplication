@@ -10,7 +10,11 @@ body {
   padding: 5px;
 }
 
-
+.md-toolbar-tools{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
 .footer {
   position: absolute;
   height: 10%;

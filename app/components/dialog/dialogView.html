@@ -11,7 +11,7 @@
 
   <md-card-content layout-gt-xs="row" >
     <md-card-title-media>
-      <div class="md-media-xl card-media routeContainer">
+      <div class="md-media-xl card-media routeContainer" ng-if="availableRoutes.length != 0">
         <md-list flex>
           <md-list-item flex class="md-whiteframe-1dp" ng-repeat="route in availableRoutes | orderBy: -expected_mins" ng-click="getVehicleLocation(route)" class="md-1-inline">
             <div class="dialogRoute" layout="column">
@@ -31,8 +31,17 @@
             </div>
           </md-list-item>
         </md-list>
-
       </div>
+      <div class="noRoutes" ng-if="availableRoutes.length == 0">
+        <div>
+          <i class="fa fa-bus fa-3x" aria-hidden="true"></i>
+        </div>
+        <div>
+          Sorry,
+          there is no departure information for this stop.
+        </div>
+      </div>
+
     </md-card-title-media>
 
 
