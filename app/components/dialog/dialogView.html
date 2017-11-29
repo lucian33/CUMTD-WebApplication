@@ -41,15 +41,18 @@
           there is no departure information for this stop.
         </div>
       </div>
-
     </md-card-title-media>
-
-
-    <!-- <md-card-actions layout-gt-sm="column" layout-align="center center">
-      <md-button>Action 1</md-button>
-      <md-button>Action 2</md-button>
-    </md-card-actions> -->
-
   </md-card-content>
+
+  <md-card-actions class="cardActionGroup">
+    <md-button id="satisfied">
+      <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
+      {{upVote}}
+    </md-button>
+    <md-button id="unsatisfied">
+      <i class="fa fa-frown-o fa-lg" aria-hidden="true"></i>
+      {{downVote}}
+    </md-button>
+  </md-card-actions>
 
 </md-card>

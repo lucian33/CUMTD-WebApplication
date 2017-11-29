@@ -11,9 +11,7 @@ body {
 }
 
 .md-toolbar-tools{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  padding: 0px;
 }
 .footer {
   position: absolute;
@@ -136,4 +134,23 @@ footer {
   /*flex: 3;*/
   width: 100%;
   margin: 0px;
+}
+
+#satisfied i{
+  color: green;
+}
+
+#unsatisfied i{
+  color: red;
+}
+.feedBackButton:before{
+  visibility: hidden;
+  display: block;
+  width: 200px;
+  height: 20px;
+  background-color: red;
+}
+.feedBackButton:hover:before{
+  visibility: visible;
+
 }

@@ -30,4 +30,9 @@ myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo'
     $mdDialog.hide();
   }
 
+
+  // satisfication rate functions
+  $scope.upVote = Math.round(Math.random() * 100);
+  $scope.downVote = Math.round(Math.random() * 100);
+
 }]);
