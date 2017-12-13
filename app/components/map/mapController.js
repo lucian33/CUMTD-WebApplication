@@ -1,3 +1,4 @@
+
 // attach controller to main app
 myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog', 'routeService', 'stopsService', 'vehicleService', function($scope, $http, $mdSidenav,  $mdDialog, routeService, stopsService, vehicleService){
 
@@ -84,8 +85,6 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     //console.log($scope.stopMarkers[index].info);
   };
 
-
-
   // --------------------------------------------functions for the departure click--------------------------------
   $scope.busMarker = [];
   $scope.shapeMarker = [];
@@ -142,7 +141,6 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     });
   }
 
-
   // --------------------------------------------functions for the collecting feedback--------------------------------
   // store current states for updating database
   $scope.currentStates = {
@@ -151,9 +149,69 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     stop_id: ''
   };
 
+  // --------------------------------------------functions for the sideNav--------------------------------
+  $scope.showSearchPrompt = function() {
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        // .title('Searching your location...')
+        .textContent('Searching your location...!')
+        // .ariaLabel('Left to right demo')
+        .ok('ok')
+        .openFrom({
+          top: -50,
+          width: 30,
+          height: 80
+        })
+        .closeTo({
+          left: 1500
+        })
+    );
+  }
+  $scope.locateUser = ()=>{
+    locateUser($scope, $mdDialog);
+  }
 
+  // get Nearest stop
+  $scope.getNearestStop = getNearestStop;
+
+  function getNearestStop(){
+    console.log("get nearest stop..");
+    var url = 'https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon';
+    // get user location first
+    if (userMarker === null){
+      if (navigator.geolocation) {
+        $scope.showSearchPrompt();
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+          $mdDialog.hide();
+          fetchNearestStop(url, pos.lat, pos.lng);
+        });
+      }
+    }
+    else {
+      fetchNearestStop(url, userMarker.position.lat(), userMarker.position.lng());
+    }
+  }
+
+
+  function fetchNearestStop(url, lat, lng){
+    $http.get(url, {
+      params: {
+        'key' : key,
+        'lat'	: lat,
+        'lon' : lng,
+        'count'	: 1
+      }
+    }).then((res) => {
+      console.log(res);
+      createMarker(res.data.stops[0].stop_points, $scope.stopMarkers, $scope.showCard);
+    });
+  }
 }]);
-
 
 // closure for the hovering button
 (function() {
@@ -265,6 +323,54 @@ function initMap() {
       scrollwheel: false,
       zoom: 18
   });
+
+  // locate the user initially
+  // locateUser();
+}
+
+
+function locateUser(s, m) {
+
+  var img = {
+    url: 'assets/img/pin2.svg',
+    scaledSize: new google.maps.Size(40, 40), // scaled size
+  };
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    s.showSearchPrompt();
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      map.setCenter(pos);
+      // create user marker on map
+      if (userMarker === null){
+        userMarker = new google.maps.Marker({
+            // assign the map and location of the marker
+            map: map,
+            title: "Your Location",
+            position: pos,
+            icon: img
+        });
+      }
+      // else just update
+      else {
+        userMarker.setPosition(pos);
+      }
+      // hide side nav and prompt
+      s.toggleLeft();
+      m.hide();
+
+      // userMarker.setMap(map);
+      // var marker = new google.maps.Marker({
+      //     // assign the map and location of the marker
+      //     map: map,
+      //     position: pos,
+      //     title: "YOU"
+      // });
+    });
+  }
 }
 
 // create route polyLine
