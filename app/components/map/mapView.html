@@ -7,7 +7,7 @@
         <div class="md-toolbar-tools">
           <div>
             <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
-              <i class="fa fa-bars fa-2x" aria-hidden="true"></i>
+              <md-icon><i class="fa fa-bars fa-2x" aria-hidden="true"></i></md-icon>
             </md-button>
           </div>
           <div flex>
@@ -67,9 +67,12 @@
                 <div class="buttonText">
                   Locate Me
                 </div>
+
               </div>
             </md-button>
+
           </div>
+        
           <div>
             <md-button ng-click="getNearestStop()">
               <div>
@@ -82,6 +85,7 @@
               </div>
             </md-button>
           </div>
+          
           <div>
             <md-button ng-click="selectedStopChange(selectedItem)">
               <div>
@@ -94,8 +98,8 @@
               </div>
             </md-button>
           </div>
+          <md-divider></md-divider>
         </md-content>
-
       </md-sidenav>
 
       <div flex class="mapHolder" md-whiteframe="2" id="GoogleMap">
@@ -103,7 +107,7 @@
       </div>
 
       <!-- FAB BUTTON -->
-      <div class="fab" class="feedBackButton" layout="row" layout-align="center center" ng-controller="fabCtrl as fb">
+      <div class="feedBackButton fab" layout="row" layout-align="center center" ng-controller="fabCtrl as fb">
 
         <md-fab-speed-dial ng-show="currentStates.isSelected" md-open="false" md-direction="{{fb.selectedDirection}}"
                            ng-class="fb.selectedMode">

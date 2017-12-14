@@ -155,6 +155,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       $mdDialog.alert()
         .clickOutsideToClose(true)
         // .title('Searching your location...')
+        .content('<i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>')
         .textContent('Searching your location...!')
         // .ariaLabel('Left to right demo')
         .ok('ok')
@@ -324,8 +325,6 @@ function initMap() {
       zoom: 18
   });
 
-  // locate the user initially
-  // locateUser();
 }
 
 
@@ -361,14 +360,6 @@ function locateUser(s, m) {
       // hide side nav and prompt
       s.toggleLeft();
       m.hide();
-
-      // userMarker.setMap(map);
-      // var marker = new google.maps.Marker({
-      //     // assign the map and location of the marker
-      //     map: map,
-      //     position: pos,
-      //     title: "YOU"
-      // });
     });
   }
 }
