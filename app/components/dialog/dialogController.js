@@ -35,4 +35,12 @@ myApp.controller('dialogController', ['$scope', '$mdDialog', '$http', 'stopInfo'
   $scope.upVote = Math.round(Math.random() * 100);
   $scope.downVote = Math.round(Math.random() * 100);
 
+  $scope.handleVote = function (flag){
+    if (flag === 1){
+      $scope.upVote++;
+    }
+    else $scope.downVote++;
+  }
+
+
 }]);

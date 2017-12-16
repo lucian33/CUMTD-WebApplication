@@ -28,13 +28,21 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
   // once user selected a stop
   $scope.selectedStopChange = function (item){
-    console.log($scope.selectedItem);
-    //console.log(item.stop_points);
-    if(item !== undefined){
-      clearMarkers($scope.stopMarkers); // clear markers from map
-      $scope.stopMarkers = []; // clear markers from array
-      createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
+    // if the user select nearest stop first than
+    // search the stop
+    if (item === null){
+      item = $scope.selectedStop;
     }
+    else {
+      $scope.selectedStop = item;
+    }
+
+    console.log(item);
+    //console.log(item.stop_points);
+    clearMarkers($scope.stopMarkers); // clear markers from map
+    $scope.stopMarkers = []; // clear markers from array
+    createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
+
   };
 
 
@@ -175,7 +183,9 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
   // get Nearest stop
   $scope.getNearestStop = getNearestStop;
-
+  $scope.news = [];
+  $scope.getNews = getNews;
+  getNews();
   function getNearestStop(){
     console.log("get nearest stop..");
     var url = 'https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon';
@@ -198,8 +208,8 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     }
   }
 
-
   function fetchNearestStop(url, lat, lng){
+
     $http.get(url, {
       params: {
         'key' : key,
@@ -209,7 +219,23 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       }
     }).then((res) => {
       console.log(res);
-      createMarker(res.data.stops[0].stop_points, $scope.stopMarkers, $scope.showCard);
+      $scope.selectedStop = res.data.stops[0];
+      $scope.selectedStopChange(res.data.stops[0]);
+
+    });
+  }
+
+  function getNews(){
+    var url = 'https://developer.cumtd.com/api/v2.2/json/getnews';
+    $scope.news = []; // empty news and show the progress bar
+    $http.get(url, {
+      params: {
+        'key' : key,
+        'count' : 6
+      }
+    }).then((res) => {
+      // console.log(res.data.news);
+      $scope.news = res.data.news;
     });
   }
 }]);

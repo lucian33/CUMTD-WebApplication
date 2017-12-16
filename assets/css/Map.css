@@ -9,8 +9,16 @@ body {
 .container{
   padding: 5px;
 }
+.navWrapper{
+  /*position: fixed;*/
+  display: flex;
+  /*width: 100vw;*/
+  justify-content: center;
+  align-items: center;
+}
 
 .md-toolbar-tools{
+  width: 100%;
   padding: 0px;
 }
 .footer {
@@ -90,7 +98,15 @@ footer {
   flex-direction: column;
 }
 
-
+.logo{
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  font-family: 'Monoton', cursive;
+  font-size: 30px;
+  color: orange;
+  line-height: 110%;
+}
 
 .toolKit .md-button>div{
   width: 100%;
@@ -152,5 +168,28 @@ footer {
 }
 .feedBackButton:hover:before{
   visibility: visible;
+}
+.newsItem a{
+  text-decoration: none;
+  color: black;
+}
+.newsItem p{
+  margin: 5px 0px;
+  line-height: 110%;
+}
+.newsItem span{
+  color: grey;
+  line-height: 110%;
+}
+.newsItem {
+  /*text-wrap: nowarp;*/
+  font-size: 14px;
+  margin: 5px 0;
+  padding: 5px 10px;
+  background: ghostWhite;
 
+}
+.newsItem:hover{
+  transition: all 1s ease;
+  background: #c2e4ec;
 }

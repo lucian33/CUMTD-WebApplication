@@ -45,11 +45,11 @@
   </md-card-content>
 
   <md-card-actions class="cardActionGroup">
-    <md-button id="satisfied">
+    <md-button id="satisfied" ng-click="handleVote(1)">
       <i class="fa fa-smile-o fa-lg" aria-hidden="true"></i>
       {{upVote}}
     </md-button>
-    <md-button id="unsatisfied">
+    <md-button id="unsatisfied" ng-click="handleVote(-1)">
       <i class="fa fa-frown-o fa-lg" aria-hidden="true"></i>
       {{downVote}}
     </md-button>

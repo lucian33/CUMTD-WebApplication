@@ -1,13 +1,13 @@
 <!-- Basic column layout -->
 <div layout="column"  style="height: 100vh;">
   <!-- Nav Header -->
-  <div class="container">
-    <div layout-xs="row">
+  <div class="container navWrapper">
+
       <md-toolbar class="md-hue-2" >
         <div class="md-toolbar-tools">
           <div>
             <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleLeft()">
-              <md-icon><i class="fa fa-bars fa-2x" aria-hidden="true"></i></md-icon>
+              <md-icon><i class="fa fa-list fa-lg" aria-hidden="true"></i></md-icon>
             </md-button>
           </div>
           <div flex>
@@ -42,7 +42,7 @@
           </md-button> -->
         </div>
       </md-toolbar>
-    </div>
+
   </div>
 
   <!-- Map Region -->
@@ -53,8 +53,8 @@
 
         <!-- Side Nav Header -->
         <md-toolbar class="md-theme-indigo">
-          <div class="userIcon"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></div>
-          <div class="userName"> Hi Passenger!</div>
+          <!-- <div class="userIcon"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i></div> -->
+          <div class="logo"> ILLINI <br> RIDER</div>
         </md-toolbar>
 
         <md-content layout-margin >
@@ -72,7 +72,7 @@
             </md-button>
 
           </div>
-        
+
           <div>
             <md-button ng-click="getNearestStop()">
               <div>
@@ -85,7 +85,7 @@
               </div>
             </md-button>
           </div>
-          
+
           <div>
             <md-button ng-click="selectedStopChange(selectedItem)">
               <div>
@@ -99,6 +99,28 @@
             </md-button>
           </div>
           <md-divider></md-divider>
+
+          <div class="localNews" >
+            <md-button ng-click="getNews()">
+              <div>
+                <div class="buttonIcon">
+                  <i class="fa fa-newspaper-o fa-lg" aria-hidden="true"></i>
+                </div>
+                <div class="buttonText">
+                  CUMTD NEWS
+                </div>
+              </div>
+            </md-button>
+
+            <div ng-repeat="item in news" ng-show="news.length != 0" class="newsItem">
+              <a href={{item.url}}><p>{{item.title}}</p></a>
+              <span>{{item.postetd_date}}</span>
+              <!-- <md-divider></md-divider> -->
+            </div>
+            <div>
+              <p ng-show="news.length == 0">  Loading news... <i class="fa fa-circle-o-notch fa-spin fa-lg fa-fw"></i></i> </p>
+            </div>
+          </div>
         </md-content>
       </md-sidenav>
 
@@ -113,7 +135,7 @@
                            ng-class="fb.selectedMode">
           <md-fab-trigger>
             <md-button aria-label="menu" class="md-fab md-warn">
-              <md-icon md-font-icon="fa-list fa-lg" class="fa"></md-icon>
+              <md-icon md-font-icon="fa fa-ellipsis-h fa-2x" class="fa"></md-icon>
             </md-button>
           </md-fab-trigger>
 
