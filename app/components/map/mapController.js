@@ -15,14 +15,9 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     initMap();
   });
 
-  // routeService.getRoutes().then(function(data){
-  //   console.log(data);
-  //   $scope.availableRoutes = data;
-  // });
-
+  // get all stops
   $scope.stops = stopsService.getStops();
   $scope.markers = [];
-
 
   // --------------------------------------------functions for the autocomplete--------------------------------
 
@@ -92,6 +87,13 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
     });
     //console.log($scope.stopMarkers[index].info);
   };
+
+
+  // draw all available stops
+  $scope.stops.forEach((stop, i)=>{
+    createStopsMarker(stop.stop_points, $scope.stopMarkers, $scope.showCard);
+  });
+
 
   // --------------------------------------------functions for the departure click--------------------------------
   $scope.busMarker = [];
@@ -311,9 +313,52 @@ function createMarker(stopPoints, markers, func) {
   });
   console.log(markers);
   panTo(position.lat, position.lng);
-  //
-  // // add marker to the marker array
-  // markers.push(marker);
+
+}
+
+// create markers for all stop
+function createStopsMarker(stopPoints, markers, func) {
+
+  var position;
+  var img = {
+    url: 'assets/img/bus-stop (4).svg',
+    size: new google.maps.Size(20, 20),
+    scaledSize: new google.maps.Size(16, 16), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(10, 20) // anchor
+  };
+
+
+
+  // the start index of the new stop
+  var startIdx = markers.length;
+
+  stopPoints.forEach((entry, i)=>{
+
+    position = {lat: entry.stop_lat, lng: entry.stop_lon};
+    var marker = new google.maps.Marker({
+        // assign the map and location of the marker
+        map: map,
+        position: position,
+        title: entry.stop_name,
+        icon: img,
+        info: entry
+    });
+
+    // add evt listener to each marker
+    // use closure to ensure the lexical scope wont be the same
+    marker.addListener('click', (function(index){
+      return function (){
+        // show the dialog
+        func(index);
+      }
+    })(startIdx + i));// self invoke, preserve the index
+
+    // store markers
+    markers.push(marker);
+
+  });
+
 }
 
 function createBusMarker(busInfo, markers) {
@@ -350,238 +395,16 @@ function initMap() {
       scrollwheel: false,
       zoom: 18,
       styles: [
-      {
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#523735"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#c9b2a6"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.land_parcel",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#dcd2be"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#ae9e90"
-          }
-        ]
-      },
-      {
-        "featureType": "landscape.natural",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#93817c"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#a5b076"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#447530"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f5f1e6"
-          }
-        ]
-      },
-      {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#fdfcf8"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#f8c967"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#e9bc62"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#e98d58"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "geometry.stroke",
-        "stylers": [
-          {
-            "color": "#db8555"
-          }
-        ]
-      },
-      {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#806b63"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#8f7d77"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.line",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#ebe3cd"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.station",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#dfd2ae"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.station.bus",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "transit.station.bus",
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#b9d3c2"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#92998d"
-          }
-        ]
-      }
-    ]
+        {
+          "featureType": "transit.station.bus",
+          "elementType": "labels.icon",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        }
+      ]
   });
 
 }

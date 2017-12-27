@@ -47,7 +47,6 @@ myApp.service('stopsService', ['$http', '$q', function($http, $q){
     var defered = $q.defer();
 
     $http.get(url, {params: {'key': key}}).then((res) => {
-
       stops = res.data.stops;
       defered.resolve(); // resolve promise
     });
