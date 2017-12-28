@@ -2,7 +2,7 @@
 // attach controller to main app
 myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog', 'routeService', 'stopsService', 'vehicleService', function($scope, $http, $mdSidenav,  $mdDialog, routeService, stopsService, vehicleService){
 
-  var mylocation = {lat: 40.108966, lng: -88.211024};
+  var mylocation = {lat: 40.1063, lng: -88.2237};
   var result;
 
   // array used to store the route line coordinates
@@ -11,13 +11,15 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
   var shapeArray = [];
   // store the stops markers
   $scope.stopMarkers = [];
+  $scope.selectedMarkers = [];
+
   $(document).ready(function () {
     initMap();
   });
 
   // get all stops
   $scope.stops = stopsService.getStops();
-  $scope.markers = [];
+  // $scope.markers = [];
 
   // --------------------------------------------functions for the autocomplete--------------------------------
 
@@ -32,11 +34,11 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       $scope.selectedStop = item;
     }
 
-    console.log(item);
-    //console.log(item.stop_points);
-    clearMarkers($scope.stopMarkers); // clear markers from map
-    $scope.stopMarkers = []; // clear markers from array
-    createMarker(item.stop_points, $scope.stopMarkers, $scope.showCard);
+    if (item === undefined){
+      return;
+    }
+
+    createSelectedStopMarker(item, $scope.stopMarkers, $scope.selectedMarkers, $scope.showCard);
 
   };
 
@@ -91,7 +93,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
 
   // draw all available stops
   $scope.stops.forEach((stop, i)=>{
-    createStopsMarker(stop.stop_points, $scope.stopMarkers, $scope.showCard);
+    createStopsMarker(stop, $scope.stopMarkers, $scope.showCard);
   });
 
 
@@ -179,15 +181,20 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
         })
     );
   }
+
   $scope.locateUser = ()=>{
     locateUser($scope, $mdDialog);
   }
 
   // get Nearest stop
   $scope.getNearestStop = getNearestStop;
+
   $scope.news = [];
+
   $scope.getNews = getNews;
+
   getNews();
+
   function getNearestStop(){
     console.log("get nearest stop..");
     var url = 'https://developer.cumtd.com/api/v2.2/json/getstopsbylatlon';
@@ -240,6 +247,7 @@ myApp.controller('mapController', ['$scope', '$http', '$mdSidenav', '$mdDialog',
       $scope.news = res.data.news;
     });
   }
+
 }]);
 
 // closure for the hovering button
@@ -275,74 +283,101 @@ function clearMarkers(markers){
 }
 
 // Helper functions
-// create marker's based on the position and marker array
-function createMarker(stopPoints, markers, func) {
+// change the marker to show user the selected stop
+function createSelectedStopMarker(item, stopsMarkers, selectedMarkers, func) {
 
-  var position;
-  var img = {
-    url: 'assets/img/icon.svg',
+  console.log(selectedMarkers);
+
+  var position, img;
+
+  img = {
+    url: 'assets/img/bus-stop (4).svg',
+    size: new google.maps.Size(20, 20),
+    scaledSize: new google.maps.Size(20, 20), // scaled size
+    origin: new google.maps.Point(0,0), // origins
+    anchor: new google.maps.Point(10, 20) // anchor
+  };
+
+  // restore default img
+  if (selectedMarkers.length !== 0){
+
+    selectedMarkers.forEach((code)=>{
+
+      stopsMarkers.forEach((marker)=>{
+        if (marker.info.code == code){
+          marker.setIcon(img);
+        }
+      });
+
+    });
+  }
+  // empty the array
+  // this won't work
+  // selectedMarkers = [];
+  selectedMarkers.splice(0, selectedMarkers.length);
+
+  img = {
+    url: 'assets/img/pin.svg',
     scaledSize: new google.maps.Size(50, 50), // scaled size
     origin: new google.maps.Point(0,0), // origin
     anchor: new google.maps.Point(25, 50) // anchor
   };
 
-  stopPoints.forEach((entry, i)=>{
+  // set new marker
+  item.stop_points.forEach((entry, i)=>{
 
     position = {lat: entry.stop_lat, lng: entry.stop_lon};
-    var marker = new google.maps.Marker({
-        // assign the map and location of the marker
-        map: map,
-        position: position,
-        title: entry.stop_name,
-        icon: img,
-        info:entry
+
+    stopsMarkers.forEach((marker)=>{
+      if (marker.info.code == entry.code){
+        marker.setIcon(img);
+      }
     });
 
-    // add evt listener to each marker
-    // use closure to ensure the lexical scope wont be the same
-    marker.addListener('click', (function(index){
-      return function (){
-        // show the dialog
-        func(i);
-      }
-    })(i));// self invoke, preserve the index
-
     // store markers
-    markers.push(marker);
+    selectedMarkers.push(entry.code);
 
   });
-  console.log(markers);
+
+  // console.log(markers);
   panTo(position.lat, position.lng);
 
 }
 
 // create markers for all stop
-function createStopsMarker(stopPoints, markers, func) {
+function createStopsMarker(stop, markers, func) {
 
   var position;
+  var stopPoints = stop.stop_points;
+
   var img = {
     url: 'assets/img/bus-stop (4).svg',
     size: new google.maps.Size(20, 20),
-    scaledSize: new google.maps.Size(16, 16), // scaled size
-    origin: new google.maps.Point(0,0), // origin
+    scaledSize: new google.maps.Size(20, 20), // scaled size
+    origin: new google.maps.Point(0,0), // origins
     anchor: new google.maps.Point(10, 20) // anchor
   };
-
 
 
   // the start index of the new stop
   var startIdx = markers.length;
 
+  // add a property as
+  // reference index for each stop
+  stop.startIdx = startIdx;
+
   stopPoints.forEach((entry, i)=>{
 
     position = {lat: entry.stop_lat, lng: entry.stop_lon};
+
     var marker = new google.maps.Marker({
         // assign the map and location of the marker
         map: map,
         position: position,
         title: entry.stop_name,
         icon: img,
-        info: entry
+        info: entry,
+        index: startIdx + i
     });
 
     // add evt listener to each marker
@@ -391,7 +426,7 @@ function createBusMarker(busInfo, markers) {
 function initMap() {
   // Create a map object and specify the DOM element for display.
   map = new google.maps.Map(document.getElementById('GoogleMap'), {
-      center: {lat: 40.108966, lng: -88.211024},
+      center: {lat: 40.1090, lng: -88.2265},
       scrollwheel: false,
       zoom: 18,
       styles: [
@@ -408,7 +443,6 @@ function initMap() {
   });
 
 }
-
 
 function locateUser(s, m) {
 
